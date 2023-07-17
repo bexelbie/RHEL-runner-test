@@ -16,11 +16,10 @@ jobs:
                 dnf install -y kernel-devel || echo "failed as expected"
             - name: Register with D4I
               env:
-                ORG_ID: ${{ secrets.ORG_ID }}
-                ACTIVATION_KEY: ${{ secrets.ACTIVATION_KEY }}
+                ORG_ID: "::add-mask::${{ secrets.ORG_ID }}"
+                ACTIVATION_KEY: "::add-mask::${{ secrets.ACTIVATION_KEY }}"
               run: |
                 subscription-manager register --org=$ORG_ID --activationkey=$ACTIVATION_KEY
             - name: Install a non-UBI shipped package - should succeed
-
               run: |
                 dnf install -y kernel-devel
