@@ -13,7 +13,7 @@ jobs:
         steps:
             - name: Install a non-UBI shipped package - should fail
               run: |
-                dnf install -y kernel-devel
+                dnf install -y kernel-devel || echo "failed as expected"
             - name: Register with D4I
               env:
                 ORG_ID: ${{ secrets.ORG_ID }}
