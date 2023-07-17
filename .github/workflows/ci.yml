@@ -17,7 +17,7 @@ jobs:
                 ORG_ID: ${{ secrets.ORG_ID }}
                 ACTIVATION_KEY: ${{ secrets.ACTIVATION_KEY }}
               run: |
-                SMDEV_CONTAINER_OFF=1 subscription-manager register --org=$ORG_ID --activationkey=$ACTIVATION_KEY
+                SMDEV_CONTAINER_OFF=1 subscription-manager register --org=$ORG_ID --activationkey=$ACTIVATION_KEY && subscription-manager attach --auto
             - name: Install a non-UBI shipped package - should succeed
               run: |
                 dnf install -y libcurl-devel
