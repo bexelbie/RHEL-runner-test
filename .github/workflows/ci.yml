@@ -1,0 +1,23 @@
+on:
+    push:
+    pull_request:
+
+name: RHEL with GitHub Runners
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        container: redhat/ubi9:latest
+        steps:
+            - name: Install a non-UBI shipped package - should fail
+              run: |
+                dnf install -y libcurl-devel
+            - name: Register with D4I
+              env:
+                ORG_ID: ${{ secrets.ORG_ID }}
+                ACTIVATION_KEY: ${{ secrets.ACTIVATION_KEY }}
+              run: |
+                subscription-manager register --org=$ORG ID --activationkey=$ACTIVATION_KEY
+            - name: Install a non-UBI shipped package - should succeed
+              run: |
+                dnf install -y libcurl-devel
