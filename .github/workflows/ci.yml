@@ -8,19 +8,19 @@ jobs:
     test:
         runs-on: ubuntu-latest
         container: redhat/ubi9:latest
+        env:
+            SMDEV_CONTAINER_OFF: 1 
         steps:
             - name: Install a non-UBI shipped package - should fail
               run: |
-                dnf install -y postgresql-devel
+                dnf install -y kernel-devel
             - name: Register with D4I
               env:
                 ORG_ID: ${{ secrets.ORG_ID }}
                 ACTIVATION_KEY: ${{ secrets.ACTIVATION_KEY }}
-                SMDEV_CONTAINER_OFF: 1 
               run: |
-                subscription-manager register --org=$ORG_ID --activationkey=$ACTIVATION_KEY && subscription-manager attach --auto
+                subscription-manager register --org=$ORG_ID --activationkey=$ACTIVATION_KEY
             - name: Install a non-UBI shipped package - should succeed
-              env:
-                SMDEV_CONTAINER_OFF: 1 
+
               run: |
-                dnf install -y postgresql-devel
+                dnf install -y kernel-devel
